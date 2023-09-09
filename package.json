@@ -1,0 +1,32 @@
+{
+  "name": "dcsm-print",
+  "version": "1.0.0",
+  "repository": "david-schofield/dcsm-print",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "description": "A simple alternative to console.log that shows more information when logging to the console in Node.js.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "keywords": [
+    "vanilla javascript",
+    "console",
+    "log",
+    "print",
+    "debug",
+    "console.log",
+    "console.print",
+    "color",
+    "terminal",
+    "terminal color",
+    "terminal color print",
+    "terminal color log",
+    "terminal color console.log"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "author": "David Schofield <david@schofield.se> (https://schofield.se/)",
+  "license": "MPL-2.0"
+}
