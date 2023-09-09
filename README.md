@@ -19,8 +19,8 @@ import Print from 'dcsm-print';
 Print('Hello, world!');
 ```
 
-## Add `Print` to the `console`
-Create and add print to the `console`:
+### Or add `Print` to the `console`
+Print supports beeing used as `console.print`:
   
 ```javascript
 import Print from 'dcsm-print';
@@ -30,3 +30,9 @@ console.print = function() {
 console.print('Hello, world!');
 ```
 
+
+## Terminal output
+_`Print` or `console.print` will display the `row`, `column`, `file`, `typeof` and `where/within/function` it was executed/used. <br />The output is also colorized using ANSI 256 color code's_
+
+[<img src="./media/terminal-screenshot.png" width="800px"/><br />](./media/terminal-screenshot.png)
+*A screenshot with a few examples of the output produced*
