@@ -1,6 +1,27 @@
 import {
   stdout
 } from 'node:process';
+import {
+  TypeHelper
+} from 'dcsm-type-helper';
+
+/**
+ * @description Get the type of a value
+ * @param {any} valuesToCheck
+ * @returns {string} - The type of the value as a string or array of strings
+ * @example
+ * getTypeof('foo');
+ * //=> 'string'
+ * @example
+ * getTypeof(['foo']);
+ * //=> 'array'
+ **/
+function getTypeof(...valuesToCheck) {
+  const typeHelper = new TypeHelper(...valuesToCheck);
+  return typeHelper.getTypeof({
+    enablePrettyTypeNames: true
+  });
+}
 
 /**
  * @description Check if a value is an array or object
@@ -252,7 +273,7 @@ function dcsmConsolePrint(...logs) {
   });
 
   logs.forEach((log, i) => {
-    console.log(toRowColFileTypeCallerString(logInfo.row, logInfo.col, logInfo.file, typeof log, logInfo.name));
+    console.log(toRowColFileTypeCallerString(logInfo.row, logInfo.col, logInfo.file, getTypeof(log), logInfo.name));
     let terminalOverflow = stdout.columns - 4;
     if (typeof log === 'object') {
       const objInfo = getObjectLogMaxNumbCols(log);
