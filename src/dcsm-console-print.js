@@ -2,8 +2,15 @@ import {
   stdout
 } from 'node:process';
 import {
-  TypeHelper
+  TypeOf
 } from 'dcsm-type-helper';
+import typeOfShorthand from "dcsm-type-helper";
+const {
+  isObject,
+  isArray,
+  isString,
+  isBoolean
+} = typeOfShorthand;
 
 /**
  * @description Get the type of a value
@@ -17,9 +24,10 @@ import {
  * //=> 'array'
  **/
 function getTypeof(...valuesToCheck) {
-  const typeHelper = new TypeHelper(...valuesToCheck);
-  return typeHelper.getTypeof({
-    enablePrettyTypeNames: true
+  const typeHelper = new TypeOf(...valuesToCheck);
+  return typeHelper.getTypeOf({
+    enableCapitalizedTypeNames: true,
+    disableThrowErrors: true
   });
 }
 
@@ -38,7 +46,8 @@ function getTypeof(...valuesToCheck) {
  * //=> true
  **/
 function isArrayOrObject(value) {
-  return ['[object Array]', '[object Object]'].includes(Object.prototype.toString.call(value));
+  //return ['[object Array]', '[object Object]'].includes(Object.prototype.toString.call(value));
+  return isArray(value) || isObject(value);
 }
 
 /**
@@ -55,7 +64,7 @@ function isArrayOrObject(value) {
 function getObjectPaths(obj) {
   const keys = {};
   for (const key in obj) {
-    keys[key.replace(/\./gmi, ' ')] = (typeof obj[key] === 'string' ? obj[key].length : 0);
+    keys[key.replace(/\./gmi, ' ')] = (isString(obj[key]) ? obj[key].length : 0);
     if (isArrayOrObject(obj[key])) {
       const newKeys = getObjectPaths(obj[key]);
       Object.keys(newKeys).forEach(newKey => {
@@ -186,7 +195,7 @@ function toRowColFileTypeCallerString(row, col, file, type, caller) {
  * //=> Generator
  **/
 function* RegExpGenerator(regex, str = '') {
-  if (RegExp(regex) === regex && typeof str === 'string') {
+  if (RegExp(regex) === regex && isString(str)) {
     let match;
     while (match = regex.exec(str)) {
       yield match;
@@ -212,7 +221,7 @@ function* RegExpGenerator(regex, str = '') {
  **/
 function RegExpAll(regex, str, showLogs = false) {
   const result = [];
-  if (RegExp(regex) === regex && typeof str === 'string') {
+  if (RegExp(regex) === regex && isString(str)) {
     for (const {
         groups: {
           ...groups
@@ -220,7 +229,7 @@ function RegExpAll(regex, str, showLogs = false) {
       }
       of RegExpGenerator(regex, str)) {
       result.push(groups);
-      if (typeof showLogs === 'boolean' && showLogs === true) {
+      if (isBoolean(showLogs) && showLogs === true) {
         console.dir(groups, {
           showHidden: false,
           depth: null,
@@ -275,11 +284,11 @@ function dcsmConsolePrint(...logs) {
   logs.forEach((log, i) => {
     console.log(toRowColFileTypeCallerString(logInfo.row, logInfo.col, logInfo.file, getTypeof(log), logInfo.name));
     let terminalOverflow = stdout.columns - 4;
-    if (typeof log === 'object') {
+    if (isObject(log)) {
       const objInfo = getObjectLogMaxNumbCols(log);
       terminalOverflow = terminalOverflow - objInfo.cols - `... ${objInfo.valueLength} more characters`.length;
     }
-    if (typeof log === 'string') {
+    if (isString(log)) {
       if (log.length > terminalOverflow) {
         terminalOverflow = terminalOverflow - `... ${(log.length - stdout.columns)} more characters`.length;
       }

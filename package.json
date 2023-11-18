@@ -1,6 +1,6 @@
 {
   "name": "dcsm-print",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "repository": "david-schofield/dcsm-print",
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -24,7 +24,9 @@
     "terminal color log",
     "terminal color console.log",
     "pretty print",
-    "pretty console.log"
+    "pretty console.log",
+    "typeof",
+    "type of"
   ],
   "engines": {
     "node": ">=16.0.0"
@@ -32,6 +34,6 @@
   "author": "David Schofield <david@schofield.se> (https://schofield.se/)",
   "license": "MPL-2.0",
   "dependencies": {
-    "dcsm-type-helper": "^2.0.0"
+    "dcsm-type-helper": "^4.0.0"
   }
 }
