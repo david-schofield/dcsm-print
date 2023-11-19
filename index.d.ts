@@ -1,4 +1,5 @@
 declare module 'dcsm-print' {
-  export function Print(...logs : any[]) : void;
+  function Print(...logs : any[]) : void;
+  export { Print };
   export default Print;
 }
